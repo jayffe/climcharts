@@ -1,25 +1,6 @@
 import * as csv from "csv-string"
 import moment from "moment"
-
-
-export const drawerWidth = 260
-
-export const loadToken = () => {
-
-  return sessionStorage.getItem("token") || null
-}
-
-
-export const saveToken = (token) => {
-
-  sessionStorage.setItem('token', token)
-}
-
-
-export const removeStoredToken = () => {
-
-  sessionStorage.removeItem('token')
-}
+import 'moment/locale/fr'
 
 export const formatDate = (d) => {
 
