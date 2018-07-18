@@ -1,6 +1,5 @@
 import React from "react"
 import * as d3 from "d3"
-import injectSheet from 'react-jss'
 
 
 d3.timeFormatDefaultLocale({
@@ -18,7 +17,7 @@ d3.timeFormatDefaultLocale({
   "shortMonths": ["Jan", "Fev", "Mars", "Avr", "Mai", "Juin", "Juil", "Aout", "Sep", "Oct", "Nov", "Dec"]
 })
 
-class BilanClimatique extends React.Component {
+class GraphBilanClimatique extends React.Component {
 
 
   componentDidMount() {
@@ -35,8 +34,8 @@ class BilanClimatique extends React.Component {
 
   show = () => {
 
-    const {json, debut, fin} = this.props
-
+    const {json, options} = this.props
+    const {debut, fin, offset, dateTicks, tempCles} = options
     const data = []
 
     json.forEach((d) => {
@@ -49,7 +48,6 @@ class BilanClimatique extends React.Component {
     const width = this.props.width - margin.left - margin.right
     const height = this.props.height - margin.top - margin.bottom;
     const barWidth = 2
-    //const t = d3.transition().duration(2000)
 
     const container = d3.select(this.node)
 
@@ -59,9 +57,14 @@ class BilanClimatique extends React.Component {
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
       .style("font-family", "Roboto")
 
+    const off = offset * .01
+    const maxTemp = d3.max(data, d => d.TMaxi) + Math.abs( d3.max(data, d => d.TMaxi) * off )
+    const minTemp = d3.min(data, d => d.TMini) - Math.abs( d3.min(data, d => d.TMini) * off )
+    const maxPluie = d3.max(data, (d) => d.Pluie) + Math.abs(  d3.max(data, (d) => d.Pluie) * off )
+
     const x = d3.scaleTime().range([0, width]).domain([debut, fin])
-    const y0 = d3.scaleLinear().range([height, 0]).domain([d3.min(data, d => d.TMini), d3.max(data, d => d.TMaxi)]);
-    const y1 = d3.scaleLinear().range([height, 0]).domain([0, d3.max(data, (d) => d.Pluie)]);
+    const y0 = d3.scaleLinear().range([height, 0]).domain([minTemp, maxTemp]);
+    const y1 = d3.scaleLinear().range([height, 0]).domain([0, maxPluie]);
 
 
     const areaTMoy = d3.area()
@@ -88,7 +91,7 @@ class BilanClimatique extends React.Component {
     svg.append("g")
       .attr("class", "xaxis")
       .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x).ticks(12))
+      .call(d3.axisBottom(x).ticks(dateTicks))
 
       // On oriente le texte
       .selectAll("text")
@@ -149,6 +152,8 @@ class BilanClimatique extends React.Component {
       .call(d3.axisLeft(y0).tickSize(-width).tickFormat(""))
 
 
+
+
     /* Graph
     -------------------------------------------------------------------------------------------------*/
 
@@ -204,51 +209,29 @@ class BilanClimatique extends React.Component {
       .style("stroke-width", 1.5)
       .attr("d", lineTMoy)
 
+    tempCles.forEach((t)=>{
+      svg.append("line")
+        .style("stroke", t.color)
+        .style("stroke-width", 2)
+        .attr("x1", 0)
+        .attr("x2", width)
+        .attr("y1", y0(t.temp))
+        .attr("y2", y0(t.temp))
+    })
+
 
   }
 
   render() {
 
-    const {classes, width, height, json, debut, fin} = this.props
+    const {width, height, json, options} = this.props
+    const {debut, fin} = options
 
     if (!json || !debut || !fin)
       return <p>Manque des données</p>
 
-    return (
-      <svg
-        width={width}
-        height={height}
-        ref={this.setRef}
-        className={classes.svg}/>
-    )
+    return <svg width={width} height={height} ref={this.setRef}/>
   }
 }
 
-/* Styles
--------------------------------------------------------------------------------------------------*/
-const styles = {
-  svg: {
-    fontFamily: "Roboto",
-    "& .line": {
-      fill: "none",
-      strokeWidth: .5
-    },
-
-    "& .grid": {
-      fill: "none",
-      opacity: .1,
-      strokeWidth: .5,
-    },
-    "& .bar": {
-      fill: "steelblue",
-      width: 2
-    },
-    "& .axisRight": {
-      color: "steelblue"
-    }
-  }
-}
-
-const StyledBilanClimatique = injectSheet(styles)(BilanClimatique)
-
-export default StyledBilanClimatique
+export default GraphBilanClimatique
