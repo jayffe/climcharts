@@ -1,12 +1,9 @@
 import React from "react"
 import classnames from "classnames"
 import withStyles from "@material-ui/core/styles/withStyles"
-import {Typography, Button, Grid} from '@material-ui/core'
-import {CameraAlt as Camera} from "@material-ui/icons"
+import {Typography, Grid} from '@material-ui/core'
 import DropZone from "react-dropzone"
 import {climDemoE2} from "../utils"
-import html2canvas from "html2canvas"
-import download from "downloadjs"
 import Slider, { createSliderWithTooltip }  from 'rc-slider'
 import 'rc-slider/assets/index.css'
 import Panel from "./Panel"
@@ -15,12 +12,14 @@ import TemperaturesCles from "./TemperaturesCles"
 import * as d3 from "d3"
 import DateRange from "./DateRange";
 import Legende from "./Legende";
+import PictureButton from "./PictureButton";
 
 const SliderTooltip = createSliderWithTooltip(Slider)
 
 class BilanClimatique extends React.Component {
 
   state = {
+    element: null,
     climbox: null,
     options:{
       debut: null,
@@ -37,6 +36,8 @@ class BilanClimatique extends React.Component {
       tempCles:[]
     },
   }
+
+  setElement = e =>!this.state.element && this.setState({element:e})
 
   setOption = ( option )=>{
 
@@ -62,20 +63,9 @@ class BilanClimatique extends React.Component {
     reader.readAsText(acceptedFiles[0], "latin1")
   }
 
-  takePicture = () => {
-
-    const {climbox} = this.state
-
-    html2canvas(document.getElementById("graph"), {
-      logging: false
-    }).then(function (canvas) {
-      download(canvas.toDataURL("image/png"), `BilanClimatique-${climbox.station}.png`, "image/png");
-    })
-  }
-
   render() {
 
-    const {climbox, options} = this.state
+    const {climbox, options, element} = this.state
     const {debut, fin, colors, offset, tempCles} = options
     const {classes} = this.props
 
@@ -96,9 +86,9 @@ class BilanClimatique extends React.Component {
 
         <DateRange onChange={this.setOption} debut={debut} fin={fin}/>
 
-        <Button onClick={this.takePicture} variant="fab"><Camera/></Button>
+        <PictureButton element={element} />
 
-        <div id="graph" className={classes.graph}>
+        <div ref={this.setElement} className={classes.graph}>
 
           <Typography paragraph={true} variant="display1" contentEditable={false}>Bilan climatique pour la station {climbox.station}</Typography>
 

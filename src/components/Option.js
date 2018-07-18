@@ -6,9 +6,9 @@ const Option = ({classes, children, titre, desc}) => (
 
   <Fragment>
     <Divider className={classes.divider}/>
-    <Grid className={classes.optionLabel} style={{"align-items": "baseline"}} item xs={8}>
+    <Grid className={classes.optionLabel} style={{alignItems: "baseline"}} item xs={8}>
       <Typography align="left" variant="button">{titre}</Typography>
-      <Typography align="left" variant="paragraph">{desc}</Typography>
+      <Typography align="left">{desc}</Typography>
     </Grid>
     <Grid item xs={4}>
       {children}

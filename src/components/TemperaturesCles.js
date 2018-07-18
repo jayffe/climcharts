@@ -91,7 +91,7 @@ class TemperatureCle extends React.Component {
         <Divider className={classes.divider}/>
         <Grid container spacing={20} justify="center" className={classes.container} alignItems="end">
 
-          <Grid style={{"align-items": "baseline"}} item xs={2}>
+          <Grid style={{alignItems: "baseline"}} item xs={2}>
             <TextField
               className={classes.label}
               type='number' value={temp}

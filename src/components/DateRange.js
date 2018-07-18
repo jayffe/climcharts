@@ -53,10 +53,10 @@ class DateRange extends Component {
 -------------------------------------------------------------------------------------------------*/
 const styles = theme => ({
   form: {
-    margin: 30
+    marginTop: 30
   },
   textField:{
-
+    marginRight: 20
   }
 });
 const StyledDateRange = withStyles(styles)(DateRange);
