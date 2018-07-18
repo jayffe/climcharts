@@ -18,7 +18,7 @@ Liste des differents outils mis à disposition, n'hésitez pas à demander si be
 
 ### Bilan climatique
 
-![Image du graphique : Bilan Climatique](https://jayffe.github.io/climcharts/img/bilanclimatique.png)
+![Bilan climatique](https://raw.githubusercontent.com/jayffe/climcharts/master/public/img/bilanclimatique.png)
 
 Ce graphique est tiré d'un fichier d'export _.csv_ de ClimBox. 
 N'ayant pas d'accès API à **ClimBox** ou aux archives des relevés **Météo France**, 
