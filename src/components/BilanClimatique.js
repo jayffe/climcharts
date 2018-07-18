@@ -1,19 +1,20 @@
 import React from "react"
 import classnames from "classnames"
 import withStyles from "@material-ui/core/styles/withStyles"
-import {TextField, Typography, Button, Grid, Paper} from '@material-ui/core'
-import {CameraAlt as Camera, Add} from "@material-ui/icons"
+import {Typography, Button, Grid} from '@material-ui/core'
+import {CameraAlt as Camera} from "@material-ui/icons"
 import DropZone from "react-dropzone"
-import {formatDate, climDemoE2} from "../utils"
+import {climDemoE2} from "../utils"
 import html2canvas from "html2canvas"
 import download from "downloadjs"
-import moment from "moment"
 import Slider, { createSliderWithTooltip }  from 'rc-slider'
 import 'rc-slider/assets/index.css'
 import Panel from "./Panel"
 import Option from "./Option"
-import TemperatureCle from "./TemperatureCle"
+import TemperaturesCles from "./TemperaturesCles"
 import * as d3 from "d3"
+import DateRange from "./DateRange";
+import Legende from "./Legende";
 
 const SliderTooltip = createSliderWithTooltip(Slider)
 
@@ -35,23 +36,6 @@ class BilanClimatique extends React.Component {
       },
       tempCles:[]
     },
-  }
-
-  changeDateFin = (e) => {
-
-    const date = moment(e.target.value, "YYYY-MM-DD").utc()
-    this.setOption({fin: date.toDate()})
-  }
-
-  changeDateDebut = (e) => {
-
-    const date = moment(e.target.value, "YYYY-MM-DD").utc()
-    this.setOption({debut: date.toDate()})
-  }
-
-  changeOffset = (offset) => {
-
-    this.setOption({offset})
   }
 
   setOption = ( option )=>{
@@ -89,33 +73,6 @@ class BilanClimatique extends React.Component {
     })
   }
 
-  changeTempCle = (i, key, value)=>{
-
-    let {tempCles} = this.state.options
-
-    tempCles[i][key] = value
-    this.setOption({ tempCles })
-  }
-
-  addTempCle= ()=>{
-    let {tempCles} = this.state.options
-
-    tempCles.push({
-      temp: 20,
-      color: "#000000",
-      label: "",
-      side: "left"
-    })
-    this.setOption({ tempCles })
-  }
-
-  removeTempCle = (i)=>{
-
-    let {tempCles} = this.state.options
-    tempCles.splice(i,1)
-    this.setOption({ tempCles })
-  }
-
   render() {
 
     const {climbox, options} = this.state
@@ -137,27 +94,9 @@ class BilanClimatique extends React.Component {
 
       <DropZone disableClick={true} className={classes.graph} onDrop={this.onDrop} accept="text/csv,application/vnd.ms-excel">
 
-        <form className={classes.form} noValidate>
-          <TextField
-            id="dateDebut"
-            label="Du"
-            type="date"
-            onChange={this.changeDateDebut}
-            value={formatDate(debut)}
-            className={classes.textField}
-            InputLabelProps={{shrink: true}}
-          />
-          <TextField
-            id="dateFin"
-            label="Au"
-            type="date"
-            onChange={this.changeDateFin}
-            value={formatDate(fin)}
-            className={classes.textField}
-            InputLabelProps={{shrink: true}}
-          />
-          <Button onClick={this.takePicture} variant="fab"><Camera/></Button>
-        </form>
+        <DateRange onChange={this.setOption} debut={debut} fin={fin}/>
+
+        <Button onClick={this.takePicture} variant="fab"><Camera/></Button>
 
         <div id="graph" className={classes.graph}>
 
@@ -169,33 +108,14 @@ class BilanClimatique extends React.Component {
             width={960}
             height={500}/>
 
-          <Grid container justify="center" spacing={40}>
-            {Object.keys(colors).map(key => (
-              <Grid key={key} item>
-                <Paper elevation={0} className={classes.legend} style={{backgroundColor:options.colors[key], margin:8, border: "1px solid #A2A2A2"}}/>
-                <Typography style={{color:"#787878"}}>{key}</Typography>
-              </Grid>
-            ))}
-          </Grid>
+          <Legende colors={colors}/>
 
         </div>
 
         <Grid container justify="center" spacing={40}>
 
           <Grid item xs={6}>
-            <Panel titre="Températures clés">
-              <Button className={classes.addTemp} onClick={this.addTempCle} variant="text"><Add/></Button>
-                {tempCles.map((d,i)=>(
-                  <TemperatureCle
-                    i={i}
-                    onChange={this.changeTempCle}
-                    remove={this.removeTempCle}
-                    temp={d.temp}
-                    label={d.label}
-                    color={d.color}
-                  />
-                ))}
-            </Panel>
+            <TemperaturesCles tempCles={tempCles} onChange={this.setOption}/>
           </Grid>
 
           <Grid item xs={6}>
@@ -203,7 +123,7 @@ class BilanClimatique extends React.Component {
               <Option
                 titre="Offset"
                 desc="Ajout de valeurs de graduations vides pour une meilleure lisibilité">
-                <SliderTooltip tipFormatter={v=>`${v} %`} value={offset} onChange={this.changeOffset} />
+                <SliderTooltip tipFormatter={v=>`${v} %`} value={offset} onChange={(offset)=>this.setOption({offset})} />
               </Option>
             </Panel>
           </Grid>
@@ -226,10 +146,6 @@ const styles = theme => ({
     flexDirection: "column",
     alignItems:"center",
   },
-  legend: {
-    height: 20,
-    width: 20,
-  },
   station: {
     color: "#4682b4"
   },
@@ -243,13 +159,6 @@ const styles = theme => ({
   },
   form: {
     margin: 30
-  },
-  addTemp:{
-    position : "absolute",
-    top: 5,
-    right: 20,
-    width: 35,
-    height: 10
   }
 });
 const StyledBilanClimatique = withStyles(styles)(BilanClimatique);

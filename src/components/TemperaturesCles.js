@@ -1,8 +1,60 @@
 import React, {Fragment} from "react"
 import {Grid, TextField, InputAdornment, Paper, Divider, Button} from "@material-ui/core"
 import withStyles from "@material-ui/core/styles/withStyles"
-import {Delete} from "@material-ui/icons"
+import {Delete, Add} from "@material-ui/icons"
 import {ChromePicker} from 'react-color'
+import Panel from "./Panel";
+
+class TemperaturesCles extends React.Component{
+
+  changeTempCle = (i, key, value)=>{
+
+    let {tempCles, onChange} = this.props
+
+    tempCles[i][key] = value
+    onChange({ tempCles })
+  }
+
+  addTempCle= ()=>{
+    let {tempCles, onChange} = this.props
+
+    tempCles.push({
+      temp: 20,
+      color: "#000000",
+      label: "",
+      side: "left"
+    })
+    onChange({ tempCles })
+  }
+
+  removeTempCle = (i)=>{
+
+    let {tempCles, onChange} = this.props
+    tempCles.splice(i,1)
+    onChange({ tempCles })
+  }
+
+  render(){
+
+    const {tempCles, classes} = this.props
+
+    return (
+      <Panel titre="Températures clés">
+        <Button className={classes.addTemp} onClick={this.addTempCle} variant="text"><Add/></Button>
+        {tempCles.map((d,i)=>(
+          <StyledTemperatureCle
+            i={i}
+            onChange={this.changeTempCle}
+            remove={this.removeTempCle}
+            temp={d.temp}
+            label={d.label}
+            color={d.color}
+          />
+        ))}
+      </Panel>
+    )
+  }
+}
 
 class TemperatureCle extends React.Component {
 
@@ -74,6 +126,13 @@ class TemperatureCle extends React.Component {
 /* Styles
 -------------------------------------------------------------------------------------------------*/
 const styles = theme => ({
+  addTemp:{
+    position : "absolute",
+    top: 5,
+    right: 20,
+    width: 35,
+    height: 10
+  },
   container: {
     padding: 20
   },
@@ -96,7 +155,9 @@ const styles = theme => ({
   deleteButton:{
     cursor: "pointer"
   }
-});
+})
+
+const StyledTemperaturesCles = withStyles(styles)(TemperaturesCles);
 const StyledTemperatureCle = withStyles(styles)(TemperatureCle);
 
-export default StyledTemperatureCle
+export default StyledTemperaturesCles
