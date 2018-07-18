@@ -184,7 +184,7 @@ class BilanClimatique extends React.Component {
 
           <Grid item xs={6}>
             <Panel titre="Températures clés">
-              <Button className={classes.addTemp} onClick={this.addTempCle} variant="fab"><Add/></Button>
+              <Button className={classes.addTemp} onClick={this.addTempCle} variant="text"><Add/></Button>
                 {tempCles.map((d,i)=>(
                   <TemperatureCle
                     i={i}
@@ -210,9 +210,7 @@ class BilanClimatique extends React.Component {
 
         </Grid>
 
-
       </DropZone>
-
     )
   }
 }
@@ -248,7 +246,7 @@ const styles = theme => ({
   },
   addTemp:{
     position : "absolute",
-    top: 8,
+    top: 5,
     right: 20,
     width: 35,
     height: 10

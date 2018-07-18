@@ -1,9 +1,9 @@
 
 import React from "react"
-import {withStyles} from "@material-ui/core/es/styles"
+import withStyles from "@material-ui/core/styles/withStyles"
 import {Paper, Grid, Typography} from "@material-ui/core";
 
-const Options = ({classes, children, titre}) => (
+const Panel = ({classes, children, titre}) => (
 
   <Paper className={classes.options}>
 
@@ -13,7 +13,6 @@ const Options = ({classes, children, titre}) => (
       {children}
     </Grid>
 
-
   </Paper>
 
 );
@@ -22,11 +21,12 @@ const Options = ({classes, children, titre}) => (
 -------------------------------------------------------------------------------------------------*/
 const styles = theme => ({
   options:{
+    position: "relative",
     padding: theme.spacing.unit * 2,
     flexDirection:"column"
   }
 })
 
-const StyledOptions = withStyles(styles)(Options);
+const StyledPanel = withStyles(styles)(Panel);
 
-export default StyledOptions
+export default StyledPanel

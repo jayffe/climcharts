@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PageGraph from "./components/PageGraph"
+import PageGraph from "./components/BilanClimatique"
 
 class App extends Component {
   render() {

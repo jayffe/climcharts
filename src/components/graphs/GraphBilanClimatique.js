@@ -1,7 +1,6 @@
 import React from "react"
 import * as d3 from "d3"
 
-
 d3.timeFormatDefaultLocale({
   "decimal": ",",
   "thousands": ".",
