@@ -32,7 +32,7 @@ class App extends Component {
         </Drawer>
 
         <Route exact path="/" component={BilanClimatique} />
-        <Route path="/etape2" component={DropCsv} />
+        <Route path="/temperatures" component={DropCsv} />
 
       </Fragment>
     )
