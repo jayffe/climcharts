@@ -18,7 +18,7 @@ export const formatDate = (d) => {
 const jours = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"]
 export const climDemoE2 = (file, cb) => {
 
-  csv.readAll(file, ";", (csvLines) => {
+  csv.readAll(file, csv.detect(file), (csvLines) => {
 
     let data = []
     const station = csvLines[2][2]
@@ -33,7 +33,6 @@ export const climDemoE2 = (file, cb) => {
           Jour: line[0],
           DateFromCsv: line[1],
           date,
-          //Date: date,
           TMini: +line[2],
           TMaxi: +line[3],
           TMoy: +line[4],
