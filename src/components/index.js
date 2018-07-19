@@ -7,6 +7,8 @@ import TemperaturesCles from "./TemperaturesCles"
 import Legende from "./Legende";
 import PictureButton from "./PictureButton"
 import DropCsv from "./DropCsv"
+import Menu from "./Menu"
+import MenuItem from "./MenuItem"
 
 export {
   BilanClimatique,
@@ -16,5 +18,7 @@ export {
   TemperaturesCles,
   Legende,
   PictureButton,
-  DropCsv
+  DropCsv,
+  Menu,
+  MenuItem
 }

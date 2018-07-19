@@ -6,14 +6,15 @@ import withStyles from "@material-ui/core/styles/withStyles"
 
 
 
-const Header = ({classes})=>(
+const Header = ({classes, toggleDrawer})=>(
+
   <AppBar color="#fff" position="static">
     <Toolbar>
-      <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+      <IconButton onClick={toggleDrawer} className={classes.menuButton} color="inherit" aria-label="Menu">
         <Menu />
       </IconButton>
       <Typography variant="title" color="inherit" className={classes.flex}>
-        ClimCharts
+        <img className={classes.logo} src="/img/climcharts.png"/>
       </Typography>
       <Button target="_blank" color="inherit" href="https://github.com/jayffe/climcharts"><Code/>Code Source</Button>
     </Toolbar>
@@ -32,6 +33,9 @@ const styles = theme => ({
   menuButton: {
     marginLeft: -12,
     marginRight: 20,
+  },
+  logo:{
+    width:200
   }
 });
 const StyledHeader = withStyles(styles)(Header)

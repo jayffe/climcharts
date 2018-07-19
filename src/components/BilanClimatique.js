@@ -1,7 +1,7 @@
 import React from "react"
 import withStyles from "@material-ui/core/styles/withStyles"
-import {Typography, Grid} from '@material-ui/core'
-import {climDemoE2} from "../utils"
+import { Typography, Grid } from '@material-ui/core'
+import { climDemoE2 } from "../utils"
 import Slider, { createSliderWithTooltip }  from 'rc-slider'
 import 'rc-slider/assets/index.css'
 import * as d3 from "d3"

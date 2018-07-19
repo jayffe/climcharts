@@ -1,4 +1,6 @@
-# ClimCharts
+![ClimCharts](https://raw.githubusercontent.com/jayffe/climcharts/master/public/img/climcharts.png)
+
+
 
 [ClimCharts](https://jayffe.github.io/climcharts) est un petit regroupement d'outils utiles de création de visuels pour Terres Inovia.
 Les graphiques sont générés à l'aide de [D3js](https://d3js.org) et le site en [React](https://reactjs.org).
