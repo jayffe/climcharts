@@ -1,18 +1,19 @@
 import React from "react"
-import classnames from "classnames"
 import withStyles from "@material-ui/core/styles/withStyles"
 import {Typography, Grid} from '@material-ui/core'
-import DropZone from "react-dropzone"
 import {climDemoE2} from "../utils"
 import Slider, { createSliderWithTooltip }  from 'rc-slider'
 import 'rc-slider/assets/index.css'
-import Panel from "./Panel"
-import Option from "./Option"
-import TemperaturesCles from "./TemperaturesCles"
 import * as d3 from "d3"
-import DateRange from "./DateRange";
-import Legende from "./Legende";
-import PictureButton from "./PictureButton";
+import {
+  DateRange,
+  Panel,
+  Option,
+  TemperaturesCles,
+  Legende,
+  PictureButton,
+  DropCsv
+} from "."
 
 const SliderTooltip = createSliderWithTooltip(Slider)
 
@@ -70,19 +71,11 @@ class BilanClimatique extends React.Component {
     const {classes} = this.props
 
     if (!climbox || !debut || !fin)
-      return (
-        <DropZone disableClick={false} className={classnames(classes.graph, classes.dropzone)} onDrop={this.onDrop}
-                  accept="text/csv,application/vnd.ms-excel">
-          <Typography paragraph={true} className={classes.form} variant="display1">Bilan Climatique</Typography>
-          <Typography variant="headline">
-            Déposez un fichier ".csv"<span className={classes.station}>-CLIMDEMO - Exemple 2-</span>
-          </Typography>
-        </DropZone>
-      )
+      return (<DropCsv onDrop={this.onDrop} titre="Bilan climatique" typecsv="CLIMDEMO - Exemple 2"/>)
 
     return (
 
-      <DropZone disableClick={true} className={classes.graph} onDrop={this.onDrop} accept="text/csv,application/vnd.ms-excel">
+      <DropCsv onDrop={this.onDrop}>
 
         <DateRange onChange={this.setOption} debut={debut} fin={fin}/>
 
@@ -120,7 +113,7 @@ class BilanClimatique extends React.Component {
 
         </Grid>
 
-      </DropZone>
+      </DropCsv>
     )
   }
 }
@@ -129,26 +122,9 @@ class BilanClimatique extends React.Component {
 -------------------------------------------------------------------------------------------------*/
 const styles = theme => ({
   graph: {
-    margin: "0 auto",
-    marginBottom: 30,
-    width: 960,
-    display: "flex",
-    flexDirection: "column",
-    alignItems:"center",
-  },
-  station: {
-    color: "#4682b4"
-  },
-  textField: {
-    width: 200
-  },
-  dropzone: {
-    width: "100%",
-    border: '1px dotted blue',
-    minHeight: 400
-  },
-  form: {
-    margin: 30
+    textAlign: "center",
+    marginTop:20,
+    marginBottom:20,
   }
 });
 const StyledBilanClimatique = withStyles(styles)(BilanClimatique);
