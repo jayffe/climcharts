@@ -3,7 +3,7 @@ import React from "react"
 import {AppBar, Toolbar, IconButton, Button, Typography} from "@material-ui/core"
 import {Menu, Code} from "@material-ui/icons"
 import withStyles from "@material-ui/core/styles/withStyles"
-
+import {Logo} from "."
 
 
 const Header = ({classes, toggleDrawer})=>(
@@ -14,7 +14,7 @@ const Header = ({classes, toggleDrawer})=>(
         <Menu />
       </IconButton>
       <Typography variant="title" color="inherit" className={classes.flex}>
-        <img className={classes.logo} src="/img/climcharts.png"/>
+        <Logo/>
       </Typography>
       <Button target="_blank" color="inherit" href="https://github.com/jayffe/climcharts"><Code/>Code Source</Button>
     </Toolbar>
@@ -33,9 +33,6 @@ const styles = theme => ({
   menuButton: {
     marginLeft: -12,
     marginRight: 20,
-  },
-  logo:{
-    width:200
   }
 });
 const StyledHeader = withStyles(styles)(Header)

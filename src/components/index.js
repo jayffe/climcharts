@@ -9,6 +9,7 @@ import PictureButton from "./PictureButton"
 import DropCsv from "./DropCsv"
 import Menu from "./Menu"
 import MenuItem from "./MenuItem"
+import Logo from "./Logo"
 
 export {
   BilanClimatique,
@@ -20,5 +21,6 @@ export {
   PictureButton,
   DropCsv,
   Menu,
-  MenuItem
+  MenuItem,
+  Logo
 }

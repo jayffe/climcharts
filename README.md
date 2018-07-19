@@ -1,4 +1,4 @@
-![ClimCharts](https://raw.githubusercontent.com/jayffe/climcharts/master/public/img/climcharts.png)
+![ClimCharts](https://raw.githubusercontent.com/jayffe/climcharts/master/src/images/climcharts.png)
 
 
 

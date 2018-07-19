@@ -2,13 +2,13 @@
 import React from "react"
 import { List, Divider, Typography } from "@material-ui/core"
 import withStyles from "@material-ui/core/styles/withStyles"
-import {MenuItem} from "."
+import {MenuItem, Logo} from "."
 
 const Menu = ({classes})=>(
 
   <div className={classes.list}>
 
-    <img src="/img/climcharts.png"/>
+    <Logo/>
 
     <Divider />
 
