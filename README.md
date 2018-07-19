@@ -12,7 +12,7 @@ plus farfelues.
 ## Les outils
 
 Liste des differents outils mis à disposition, n'hésitez pas à demander si besoin d'étoffer cette liste ou questions éventuelles:
-[gardere@jayffe.fr](gardere@jayffe.fr)
+[gardere@jayffe.fr](mailto:gardere@jayffe.fr)
 
 
 
