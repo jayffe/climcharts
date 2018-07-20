@@ -8,7 +8,7 @@ import {Logo} from "."
 
 const Header = ({classes, toggleDrawer})=>(
 
-  <AppBar color="#fff" position="static">
+  <AppBar className={classes.root} position="static">
     <Toolbar>
       <IconButton onClick={toggleDrawer} className={classes.menuButton} color="inherit" aria-label="Menu">
         <Menu />
@@ -25,7 +25,7 @@ const Header = ({classes, toggleDrawer})=>(
 -------------------------------------------------------------------------------------------------*/
 const styles = theme => ({
   root: {
-    flexGrow: 1,
+    backgroundColor: "#FFF",
   },
   flex: {
     flexGrow: 1,

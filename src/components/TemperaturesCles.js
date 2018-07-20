@@ -43,6 +43,7 @@ class TemperaturesCles extends React.Component{
         <Button className={classes.addTemp} onClick={this.addTempCle} variant="text"><Add/></Button>
         {tempCles.map((d,i)=>(
           <StyledTemperatureCle
+            key={`temp-${i}`}
             i={i}
             onChange={this.changeTempCle}
             remove={this.removeTempCle}
@@ -89,7 +90,7 @@ class TemperatureCle extends React.Component {
     return (
       <Fragment>
         <Divider className={classes.divider}/>
-        <Grid container spacing={20} justify="center" className={classes.container} alignItems="end">
+        <Grid container spacing={24} justify="center" className={classes.container} alignItems="flex-end">
 
           <Grid style={{alignItems: "baseline"}} item xs={2}>
             <TextField

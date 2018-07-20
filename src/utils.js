@@ -15,19 +15,29 @@ export const formatDate = (d) => {
 }
 
 
-const jours = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"]
 export const climDemoE2 = (file, cb) => {
 
   csv.readAll(file, csv.detect(file), (csvLines) => {
 
+    const firstDataLine = 7
     let data = []
     const station = csvLines[2][2]
 
+    const joursFR = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"]
+    const joursEN = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+    const isFR = new RegExp( joursFR.join( "|" ), "i").test(csvLines[firstDataLine][0])
+
+
+    let fDate = isFR ? "DD/MM/YYYY" : "MM/DD/YYYY"
+    let jours = isFR ? joursFR : joursEN
+
+    const regex = new RegExp( jours.join( "|" ), "i")
+
     csvLines
-      .filter((line) => (jours.includes(line[0])))
+      .filter((line) => (regex.test(line[0])))
       .forEach((line) => {
 
-        const date = moment(line[1], "DD/MM/YYYY").utc()
+        const date = moment(line[1], fDate).utc()
 
         data.push({
           Jour: line[0],

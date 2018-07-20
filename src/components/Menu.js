@@ -1,6 +1,6 @@
 
 import React from "react"
-import { List, Divider, Typography } from "@material-ui/core"
+import { List, Divider } from "@material-ui/core"
 import withStyles from "@material-ui/core/styles/withStyles"
 import {MenuItem, Logo} from "."
 
