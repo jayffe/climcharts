@@ -26,6 +26,7 @@ const Header = ({classes, toggleDrawer})=>(
 const styles = theme => ({
   root: {
     backgroundColor: "#FFF",
+    color:"#717171"
   },
   flex: {
     flexGrow: 1,
