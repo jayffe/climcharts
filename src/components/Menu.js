@@ -14,7 +14,6 @@ const Menu = ({classes})=>(
 
     <List>
       <MenuItem to="/" label="Bilan climatique"/>
-      <MenuItem to="/temperatures" label="Temperatures"/>
     </List>
 
     <Divider />

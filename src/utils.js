@@ -14,6 +14,49 @@ export const formatDate = (d) => {
   return [year, month, day].join('-');
 }
 
+export const climFreqSomme = (file, cb) => {
+
+  csv.readAll(file, csv.detect(file), (csvLines) => {
+
+    const toDate = d => moment().month(+d.split("/")[1] - 1).date(+d.split("/")[0])
+
+    const firstDataLine = 8
+    let data = []
+    const station = csvLines[2][2]
+    const lines = csvLines.splice(firstDataLine)
+    let debut = toDate(lines[0][0]).utc()
+    let fin;
+
+    lines.forEach((line) => {
+
+        if(line[0]){
+
+          let split = line[0].split("/");
+
+          let date = toDate(line[0]).utc()
+          fin = date;
+
+          data.push({
+            date: date,
+            TMini: +line[2],
+            TMaxi: +line[3],
+            TMoy: +line[4]
+          })
+        }
+
+      })
+
+    const json = {
+      data,
+      debut,
+      fin,
+      station
+    }
+
+    cb(json)
+
+  })
+}
 
 export const climDemoE2 = (file, cb) => {
 

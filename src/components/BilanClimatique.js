@@ -13,7 +13,8 @@ import {
   Legende,
   PictureButton,
   DropCsv
-} from "."
+} from "./index"
+import withOptions from "./Options"
 
 const SliderTooltip = createSliderWithTooltip(Slider)
 
@@ -21,30 +22,16 @@ class BilanClimatique extends React.Component {
 
   state = {
     element: null,
-    climbox: null,
-    options:{
-      debut: null,
-      fin: null,
-      offset: 10,
-      dateTicks: 12,
-      colors: {
-        TMoy: "#FF9A5A",
-        TMax: "#FF0200",
-        TMini: "#53DDFF",
-        TZone: "#FFD19B",
-        Pluie: "#4682b4"
-      },
-      tempCles:[]
-    },
+    climbox: null
+  }
+
+  componentWillMount(){
+
+    const {setOption} = this.props
+    setOption({tempCles:[]})
   }
 
   setElement = e =>!this.state.element && this.setState({element:e})
-
-  setOption = ( option )=>{
-
-    const {options} = this.state
-    this.setState({options:{...options, ...option}})
-  }
 
   onDrop = (acceptedFiles, rejected) => {
 
@@ -55,7 +42,7 @@ class BilanClimatique extends React.Component {
     reader.onloadend = ()=>{
       climDemoE2(reader.result,(climbox)=>{
         this.setState({climbox})
-        this.setOption({
+        this.props.setOption({
           debut: new Date(climbox.data[0].date),
           fin: new Date(climbox.data[climbox.data.length - 1].date)
         })
@@ -66,9 +53,9 @@ class BilanClimatique extends React.Component {
 
   render() {
 
-    const {climbox, options, element} = this.state
+    const {climbox, element} = this.state
+    const {classes, options, setOption} = this.props
     const {debut, fin, colors, offset, tempCles} = options
-    const {classes} = this.props
 
     if (!climbox || !debut || !fin)
       return (<DropCsv onDrop={this.onDrop} titre="Bilan climatique" typecsv="CLIMDEMO - Exemple 2"/>)
@@ -76,8 +63,8 @@ class BilanClimatique extends React.Component {
     return (
 
       <DropCsv onDrop={this.onDrop}>
-
-        <DateRange onChange={this.setOption} debut={debut} fin={fin}/>
+        
+        <DateRange onChange={setOption} debut={debut} fin={fin}/>
 
         <PictureButton element={element} />
 
@@ -98,7 +85,7 @@ class BilanClimatique extends React.Component {
         <Grid container justify="center" spacing={40}>
 
           <Grid item xs={6}>
-            <TemperaturesCles tempCles={tempCles} onChange={this.setOption}/>
+            <TemperaturesCles tempCles={tempCles} onChange={setOption}/>
           </Grid>
 
           <Grid item xs={6}>
@@ -106,7 +93,7 @@ class BilanClimatique extends React.Component {
               <Option
                 titre="Offset"
                 desc="Ajout de valeurs de graduations vides pour une meilleure lisibilité">
-                <SliderTooltip tipFormatter={v=>`${v} %`} value={offset} onChange={(offset)=>this.setOption({offset})} />
+                <SliderTooltip tipFormatter={v=>`${v} %`} value={offset} onChange={(offset)=>setOption({offset})} />
               </Option>
             </Panel>
           </Grid>
@@ -129,7 +116,7 @@ const styles = theme => ({
 });
 const StyledBilanClimatique = withStyles(styles)(BilanClimatique);
 
-export default StyledBilanClimatique
+export default withOptions(StyledBilanClimatique)
 
 
 /* Graph D3
@@ -151,10 +138,6 @@ d3.timeFormatDefaultLocale({
 
 class GraphBilanClimatique extends React.Component {
 
-
-  componentDidMount() {
-    this.show()
-  }
 
   componentDidUpdate() {
     this.show()

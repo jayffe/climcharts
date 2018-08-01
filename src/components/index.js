@@ -10,6 +10,7 @@ import DropCsv from "./DropCsv"
 import Menu from "./Menu"
 import MenuItem from "./MenuItem"
 import Logo from "./Logo"
+import withOptions from "./Options"
 
 export {
   BilanClimatique,
@@ -22,5 +23,6 @@ export {
   DropCsv,
   Menu,
   MenuItem,
-  Logo
+  Logo,
+  withOptions
 }

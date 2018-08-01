@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react'
 import Header from "./components/Header"
 import { Drawer } from "@material-ui/core"
-import { Menu, BilanClimatique, DropCsv } from "./components"
+import { Menu, BilanClimatique } from "./components"
 import { Route } from "react-router-dom"
 
 
@@ -32,7 +32,6 @@ class App extends Component {
         </Drawer>
 
         <Route exact path="/" component={BilanClimatique} />
-        <Route path="/temperatures" component={DropCsv} />
 
       </Fragment>
     )
